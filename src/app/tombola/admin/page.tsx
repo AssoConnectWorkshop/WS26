@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { QRCodeSVG } from "qrcode.react";
 
 const BLUE = "#2454D4";
 const BLUE2 = "#1A3FAA";
@@ -202,6 +203,34 @@ export default function AdminPage() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* QR Code */}
+        <motion.div className="mb-8 rounded-2xl overflow-hidden flex flex-col sm:flex-row items-center gap-6 p-6"
+          style={{ background: "rgba(255,255,255,0.85)", border: `1.5px solid ${BLUE}18`, backdropFilter: "blur(8px)" }}
+          initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+          <div className="p-3 rounded-2xl bg-white" style={{ boxShadow: `0 4px 20px ${BLUE}18`, border: `1px solid ${BLUE}10` }}>
+            <QRCodeSVG
+              value={typeof window !== "undefined" ? `${window.location.origin}/tombola/register` : "/tombola/register"}
+              size={140}
+              fgColor={BLUE}
+              bgColor="white"
+              level="M"
+            />
+          </div>
+          <div className="flex-1 text-center sm:text-left">
+            <div className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: TEAL }}>Inscription rapide</div>
+            <h3 className="text-xl font-black mb-2" style={{ color: BLUE }}>QR code participants</h3>
+            <p className="text-sm text-gray-500 leading-relaxed mb-4">
+              Affichez ce QR code lors de l&apos;événement. Les participants scannent et s&apos;inscrivent en 10 secondes avec juste leur nom et prénom.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold" style={{ background: `${TEAL}15`, color: TEAL2 }}>
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: TEAL }} />
+                /tombola/register
+              </span>
+            </div>
+          </div>
+        </motion.div>
 
         {/* Participants table */}
         <div className="rounded-2xl overflow-hidden" style={{ background: "rgba(255,255,255,0.85)", border: `1px solid ${BLUE}14`, backdropFilter: "blur(8px)" }}>
